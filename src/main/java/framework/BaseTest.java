@@ -14,6 +14,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -51,11 +52,16 @@ public abstract class BaseTest {
     public void beforeSuite(ITestContext context) {
     	System.out.println(System.getenv());
     }
+    
+    @BeforeTest
+    public void beforeTest(ITestContext context) {
+    	setQueryFromTestName(context);
+    	setBrowserOS(deviceQuery);
+    }
 
     @BeforeClass
     public void beforeClass(ITestContext context) {
-    	setQueryFromTestName(context);
-    	setBrowserOS(deviceQuery);
+    	System.out.println("Test Class with -> " + this.deviceOS + " , " + this.deviceQuery);
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;
 		try {
