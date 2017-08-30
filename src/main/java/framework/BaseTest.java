@@ -97,19 +97,19 @@ public abstract class BaseTest {
     	//envVariable.append("Device").append(deviceNum).append("_UDID");
     	//return System.getenv(envVariable.toString());
     	switch(deviceNum) {
-	    	case 1: return DEVICE1_QUERY;
-	    	case 2: return DEVICE2_QUERY;
-	    	case 3: return DEVICE3_QUERY;
-	    	case 4: return DEVICE4_QUERY;
-	    	case 5: return DEVICE5_QUERY;
+	    	case 1: setBrowserOS(DEVICE1_QUERY); return DEVICE1_QUERY;
+	    	case 2: setBrowserOS(DEVICE2_QUERY); return DEVICE2_QUERY;
+	    	case 3: setBrowserOS(DEVICE3_QUERY); return DEVICE3_QUERY;
+	    	case 4: setBrowserOS(DEVICE4_QUERY); return DEVICE4_QUERY;
+	    	case 5: setBrowserOS(DEVICE5_QUERY); return DEVICE5_QUERY;
     	}
     	return null;
     }
     
-    private void setBrowserOS(String deviceOS) {
-    	if (deviceOS.equalsIgnoreCase("android")) {
+    private void setBrowserOS(String query) {
+    	if (query.contains("android")) {
     		this.deviceOS = MobileOS.ANDROID;
-    	} else if (deviceOS.equalsIgnoreCase("ios")) {
+    	} else if (query.contains("ios")) {
     		this.deviceOS = MobileOS.IOS;
     	}
     }
