@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Jenkins CI Smoke Suite" parallel="tests" thread-count="6">
+
+	<test name="Device 1">
+		<parameter name="device.os" value="ios" />
+		<classes>
+			<class name="tests.Eribank" />
+		</classes>
+	</test>
+
+	<test name="Device 2">
+		<parameter name="device.os" value="ios" />
+		<classes>
+			<class name="tests.Eribank" />
+		</classes>
+	</test>
+
+</suite>
