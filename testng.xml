@@ -2,7 +2,7 @@
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Jenkins CI Smoke Suite" parallel="tests" thread-count="6">
+<suite name="Amit Jenkins Task" parallel="tests" thread-count="6">
 
 	<test name="Device 1">
 		<parameter name="device.os" value="ios" />
@@ -17,5 +17,5 @@
 			<class name="tests.Eribank" />
 		</classes>
 	</test>
-
+	
 </suite>
