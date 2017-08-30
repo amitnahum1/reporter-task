@@ -20,6 +20,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
 
 public abstract class BaseTest {
 
@@ -66,6 +67,7 @@ public abstract class BaseTest {
     		case ANDROID:
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
+    			caps.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");  
     			caps.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");
     			caps.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
     			driver = new AndroidDriver<WebElement>(seeTestServer, caps); 
@@ -73,6 +75,7 @@ public abstract class BaseTest {
     		case IOS: 
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
+    			caps.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
     			caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     			driver = new IOSDriver<WebElement>(seeTestServer, caps); 
     			break;
