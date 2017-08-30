@@ -72,6 +72,7 @@ public abstract class BaseTest {
 
     @BeforeClass
     public void beforeClass(ITestContext context) {
+    	System.out.println(testsMap);
     	String testName = context.getCurrentXmlTest().getName();
     	DeviceForTest device = testsMap.get(testName);
     	System.out.println("Device for Test -> " + device);
