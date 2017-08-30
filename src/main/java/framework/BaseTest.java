@@ -46,13 +46,10 @@ public abstract class BaseTest {
     public void beforeSuite(ITestContext context) {
     	buildId = System.getenv("BUILD_NUMBER");
     }*/
-    
-    private String getQueryFromUdid(String udid) {
-    	return "@serialnumber='" + udid + "'";
-    }
 
     @BeforeClass
     public void beforeClass(ITestContext context) {
+    	System.out.println(System.getenv());
     	setBrowserOS(getTestNGParam(context,"device.os"));
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;
@@ -93,9 +90,6 @@ public abstract class BaseTest {
     private String getQueryFromTestName(ITestContext context) {
     	String testName = context.getCurrentXmlTest().getName();
     	int deviceNum = Integer.parseInt(testName.split(" ")[1]);
-    	//StringBuilder envVariable = new StringBuilder();
-    	//envVariable.append("Device").append(deviceNum).append("_UDID");
-    	//return System.getenv(envVariable.toString());
     	switch(deviceNum) {
 	    	case 1: setBrowserOS(DEVICE1_QUERY); return DEVICE1_QUERY;
 	    	case 2: setBrowserOS(DEVICE2_QUERY); return DEVICE2_QUERY;
