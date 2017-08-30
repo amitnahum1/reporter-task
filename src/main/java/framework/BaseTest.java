@@ -38,6 +38,7 @@ public abstract class BaseTest {
     
     //Client and Device
     protected AppiumDriver<WebElement> driver;
+    private String deviceQuery;
     protected MobileOS deviceOS;
 
     private static String getTestNGParam(ITestContext context, String key) {
@@ -60,7 +61,8 @@ public abstract class BaseTest {
 
     @BeforeClass
     public void beforeClass(ITestContext context) {
-    	setBrowserOS(getTestNGParam(context,"device.os"));
+    	setQueryFromTestName(context);
+    	setBrowserOS(deviceQuery);
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;
 		try {
@@ -93,21 +95,20 @@ public abstract class BaseTest {
     	caps.setCapability("testName", this.getClass().getSimpleName());
     	caps.setCapability("suite.type", context.getSuite().getName());
     	caps.setCapability("build.id", buildId);
-    	caps.setCapability("deviceQuery", getQueryFromTestName(context));
+    	caps.setCapability("deviceQuery", deviceQuery);
     	caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     }
     
-    private String getQueryFromTestName(ITestContext context) {
+    private void setQueryFromTestName(ITestContext context) {
     	String testName = context.getCurrentXmlTest().getName();
     	int deviceNum = Integer.parseInt(testName.split(" ")[1]);
     	switch(deviceNum) {
-	    	case 1: setBrowserOS(DEVICE1_QUERY); return DEVICE1_QUERY;
-	    	case 2: setBrowserOS(DEVICE2_QUERY); return DEVICE2_QUERY;
-	    	case 3: setBrowserOS(DEVICE3_QUERY); return DEVICE3_QUERY;
-	    	case 4: setBrowserOS(DEVICE4_QUERY); return DEVICE4_QUERY;
-	    	case 5: setBrowserOS(DEVICE5_QUERY); return DEVICE5_QUERY;
+	    	case 1: this.deviceQuery = DEVICE1_QUERY;
+	    	case 2: this.deviceQuery = DEVICE2_QUERY;
+	    	case 3: this.deviceQuery = DEVICE3_QUERY;
+	    	case 4: this.deviceQuery = DEVICE4_QUERY;
+	    	case 5: this.deviceQuery = DEVICE5_QUERY;
     	}
-    	return null;
     }
     
     private void setBrowserOS(String query) {
