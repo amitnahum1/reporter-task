@@ -73,8 +73,10 @@ public abstract class BaseTest {
     @BeforeClass
     public void beforeClass(ITestContext context) {
     	String testName = context.getCurrentXmlTest().getName();
-    	this.deviceQuery = testsMap.get(testName).getQuery();
-    	this.deviceOS = testsMap.get(testName).getOs();
+    	DeviceForTest device = testsMap.get(testName);
+    	System.out.println("Device for Test -> " + device);
+    	this.deviceQuery = device.getQuery();
+    	this.deviceOS = device.getOs();
     	System.out.println("Test Class with -> " + testName + " , " + this.deviceOS + " , " + this.deviceQuery);
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;

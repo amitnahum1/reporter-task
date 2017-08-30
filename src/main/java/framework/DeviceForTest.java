@@ -16,5 +16,10 @@ public class DeviceForTest {
 	public MobileOS getOs() {
 		return os;
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		return sb.append(os).append(" , ").append(query).toString();
+	}
 
 }
