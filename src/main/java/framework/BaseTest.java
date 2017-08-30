@@ -18,6 +18,7 @@ import org.testng.annotations.BeforeSuite;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 
 public abstract class BaseTest {
@@ -41,22 +42,13 @@ public abstract class BaseTest {
     private String deviceQuery;
     protected MobileOS deviceOS;
 
-    private static String getTestNGParam(ITestContext context, String key) {
+    /*private static String getTestNGParam(ITestContext context, String key) {
     	return context.getCurrentXmlTest().getParameter(key);
-    }
+    }*/
     
     @BeforeSuite
     public void beforeSuite(ITestContext context) {
     	System.out.println(System.getenv());
-    	System.out.println(GRID_USERNAME);
-    	System.out.println(GRID_PASSWORD);
-    	System.out.println(GRID_PROJECT_NAME);
-    	System.out.println(GRID_URL);
-    	System.out.println(DEVICE1_QUERY);
-    	System.out.println(DEVICE2_QUERY);
-    	System.out.println(DEVICE3_QUERY);
-    	System.out.println(DEVICE4_QUERY);
-    	System.out.println(DEVICE5_QUERY);
     }
 
     @BeforeClass
@@ -74,11 +66,14 @@ public abstract class BaseTest {
     		case ANDROID:
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
+    			caps.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");
+    			caps.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
     			driver = new AndroidDriver<WebElement>(seeTestServer, caps); 
     			break;
     		case IOS: 
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
+    			caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     			driver = new IOSDriver<WebElement>(seeTestServer, caps); 
     			break;
     	}
@@ -96,7 +91,6 @@ public abstract class BaseTest {
     	caps.setCapability("suite.type", context.getSuite().getName());
     	caps.setCapability("build.id", buildId);
     	caps.setCapability("deviceQuery", deviceQuery);
-    	caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     }
     
     private void setQueryFromTestName(ITestContext context) {
@@ -112,7 +106,6 @@ public abstract class BaseTest {
     }
     
     private void setBrowserOS(String query) {
-    	System.out.println("QUERY = " + query);
     	if (query.contains("android")) {
     		this.deviceOS = MobileOS.ANDROID;
     	} else if (query.contains("ios")) {
