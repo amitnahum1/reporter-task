@@ -3,6 +3,7 @@ package framework;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -27,6 +28,7 @@ public abstract class BaseTest {
 
 	//General
 	protected static String buildId = System.getenv("BUILD_NUMBER");
+	private static HashMap<String,DeviceForTest> testsMap;
 	
 	//Grid
     private static final String GRID_USERNAME = System.getenv("SeeTestCloud_Username");
@@ -51,16 +53,21 @@ public abstract class BaseTest {
     @BeforeSuite
     public void beforeSuite(ITestContext context) {
     	System.out.println(System.getenv());
+    	testsMap = new HashMap<String,DeviceForTest>();
     }
     
     @BeforeTest
     public void beforeTest(ITestContext context) {
-    	setQueryFromTestName(context);
-    	setBrowserOS(deviceQuery);
+    	String testName = context.getCurrentXmlTest().getName();
+    	String query = getQueryFromTestName(testName);
+    	testsMap.put(testName, new DeviceForTest(query,getDeviceOSfromQuery(query)));
     }
 
     @BeforeClass
     public void beforeClass(ITestContext context) {
+    	String testName = context.getCurrentXmlTest().getName();
+    	this.deviceQuery = testsMap.get(testName).getQuery();
+    	this.deviceOS = testsMap.get(testName).getOs();
     	System.out.println("Test Class with -> " + this.deviceOS + " , " + this.deviceQuery);
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;
@@ -73,7 +80,6 @@ public abstract class BaseTest {
     		case ANDROID:
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
-    			caps.setCapability("instrumentApp", true);
     			caps.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");  
     			caps.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");
     			caps.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
@@ -82,7 +88,6 @@ public abstract class BaseTest {
     		case IOS: 
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
-    			caps.setCapability("instrumentApp", true);
     			caps.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
     			caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     			driver = new IOSDriver<WebElement>(seeTestServer, caps); 
@@ -102,26 +107,28 @@ public abstract class BaseTest {
     	caps.setCapability("suite.type", context.getSuite().getName());
     	caps.setCapability("build.id", buildId);
     	caps.setCapability("deviceQuery", deviceQuery);
+    	caps.setCapability("instrumentApp", true);
     }
     
-    private void setQueryFromTestName(ITestContext context) {
-    	String testName = context.getCurrentXmlTest().getName();
+    private String getQueryFromTestName(String testName) {
     	int deviceNum = Integer.parseInt(testName.split(" ")[1]);
     	switch(deviceNum) {
-	    	case 1: this.deviceQuery = DEVICE1_QUERY;
-	    	case 2: this.deviceQuery = DEVICE2_QUERY;
-	    	case 3: this.deviceQuery = DEVICE3_QUERY;
-	    	case 4: this.deviceQuery = DEVICE4_QUERY;
-	    	case 5: this.deviceQuery = DEVICE5_QUERY;
+	    	case 1: return DEVICE1_QUERY;
+	    	case 2: return DEVICE2_QUERY;
+	    	case 3: return DEVICE3_QUERY;
+	    	case 4: return DEVICE4_QUERY;
+	    	case 5: return DEVICE5_QUERY;
     	}
+    	return null;
     }
     
-    private void setBrowserOS(String query) {
+    private MobileOS getDeviceOSfromQuery(String query) {
     	if (query.contains("android")) {
-    		this.deviceOS = MobileOS.ANDROID;
+    		return MobileOS.ANDROID;
     	} else if (query.contains("ios")) {
-    		this.deviceOS = MobileOS.IOS;
+    		return MobileOS.IOS;
     	}
+    	return null;
     }
     
     @BeforeMethod
