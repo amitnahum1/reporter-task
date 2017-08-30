@@ -13,6 +13,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -42,14 +44,22 @@ public abstract class BaseTest {
     	return context.getCurrentXmlTest().getParameter(key);
     }
     
-    /*@BeforeSuite
+    @BeforeSuite
     public void beforeSuite(ITestContext context) {
-    	buildId = System.getenv("BUILD_NUMBER");
-    }*/
+    	System.out.println(System.getenv());
+    	System.out.println(GRID_USERNAME);
+    	System.out.println(GRID_PASSWORD);
+    	System.out.println(GRID_PROJECT_NAME);
+    	System.out.println(GRID_URL);
+    	System.out.println(DEVICE1_QUERY);
+    	System.out.println(DEVICE2_QUERY);
+    	System.out.println(DEVICE3_QUERY);
+    	System.out.println(DEVICE4_QUERY);
+    	System.out.println(DEVICE5_QUERY);
+    }
 
     @BeforeClass
     public void beforeClass(ITestContext context) {
-    	System.out.println(System.getenv());
     	setBrowserOS(getTestNGParam(context,"device.os"));
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;
