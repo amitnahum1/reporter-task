@@ -67,6 +67,7 @@ public abstract class BaseTest {
     		case ANDROID:
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
+    			caps.setCapability("instrumentApp", true);
     			caps.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");  
     			caps.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.experitest.ExperiBank");
     			caps.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".LoginActivity");
@@ -75,6 +76,7 @@ public abstract class BaseTest {
     		case IOS: 
     			addSeeTestGridCaps(caps, context);
     			//System.out.println(caps);
+    			caps.setCapability("instrumentApp", true);
     			caps.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank");
     			caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     			driver = new IOSDriver<WebElement>(seeTestServer, caps); 
