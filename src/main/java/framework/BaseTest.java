@@ -60,6 +60,10 @@ public abstract class BaseTest {
     public void beforeTest(ITestContext context) {
     	String testName = context.getCurrentXmlTest().getName();
     	String query = getQueryFromTestName(testName);
+    	addToTestsMap(testName, query);
+    }
+    
+    private synchronized void addToTestsMap(String testName, String query) {
     	testsMap.put(testName, new DeviceForTest(query,getDeviceOSfromQuery(query)));
     }
 
@@ -68,7 +72,7 @@ public abstract class BaseTest {
     	String testName = context.getCurrentXmlTest().getName();
     	this.deviceQuery = testsMap.get(testName).getQuery();
     	this.deviceOS = testsMap.get(testName).getOs();
-    	System.out.println("Test Class with -> " + this.deviceOS + " , " + this.deviceQuery);
+    	System.out.println("Test Class with -> " + testName + " , " + this.deviceOS + " , " + this.deviceQuery);
     	DesiredCapabilities caps = new DesiredCapabilities();
     	URL seeTestServer = null;
 		try {
