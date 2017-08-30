@@ -53,7 +53,6 @@ public abstract class BaseTest {
     @BeforeSuite
     public void beforeSuite(ITestContext context) {
     	System.out.println(System.getenv());
-    	testsMap = new HashMap<String,DeviceForTest>();
     }
     
     @BeforeTest
@@ -64,6 +63,9 @@ public abstract class BaseTest {
     }
     
     private synchronized void addToTestsMap(String testName, String query) {
+    	if (testsMap == null) {
+    		testsMap = new HashMap<String,DeviceForTest>();
+    	}
     	testsMap.put(testName, new DeviceForTest(query,getDeviceOSfromQuery(query)));
     }
 
