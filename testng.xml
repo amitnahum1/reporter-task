@@ -5,17 +5,33 @@
 <suite name="Amit Jenkins Task" parallel="tests" thread-count="6">
 
 	<test name="Device 1">
-		<parameter name="device.os" value="ios" />
 		<classes>
 			<class name="tests.Eribank" />
 		</classes>
 	</test>
 
 	<test name="Device 2">
-		<parameter name="device.os" value="ios" />
 		<classes>
 			<class name="tests.Eribank" />
 		</classes>
 	</test>
-	
+
+	<test name="Device 3">
+		<classes>
+			<class name="tests.Eribank" />
+		</classes>
+	</test>
+
+	<test name="Device 4">
+		<classes>
+			<class name="tests.Eribank" />
+		</classes>
+	</test>
+
+	<test name="Device 5">
+		<classes>
+			<class name="tests.Eribank" />
+		</classes>
+	</test>
+
 </suite>

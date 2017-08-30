@@ -28,6 +28,11 @@ public abstract class BaseTest {
     private static final String GRID_PASSWORD = System.getenv("SeeTestCloud_Password");
     private static final String GRID_PROJECT_NAME = System.getenv("SeeTestCloud_Project");
     private static final String GRID_URL = System.getenv("SeeTestCloud_Server_URL");
+    private static final String DEVICE1_QUERY = System.getenv("Device1_Query");
+    private static final String DEVICE2_QUERY = System.getenv("Device2_Query");
+    private static final String DEVICE3_QUERY = System.getenv("Device3_Query");
+    private static final String DEVICE4_QUERY = System.getenv("Device4_Query");
+    private static final String DEVICE5_QUERY = System.getenv("Device5_Query");
     
     //Client and Device
     protected AppiumDriver<WebElement> driver;
@@ -81,16 +86,24 @@ public abstract class BaseTest {
     	caps.setCapability("testName", this.getClass().getSimpleName());
     	caps.setCapability("suite.type", context.getSuite().getName());
     	caps.setCapability("build.id", buildId);
-    	caps.setCapability("deviceQuery", getQueryFromUdid(getUdidFromTestName(context)));
+    	caps.setCapability("deviceQuery", getQueryFromTestName(context));
     	caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.experitest.ExperiBank");
     }
     
-    private String getUdidFromTestName(ITestContext context) {
+    private String getQueryFromTestName(ITestContext context) {
     	String testName = context.getCurrentXmlTest().getName();
-    	String deviceNum = testName.split(" ")[1];
-    	StringBuilder envVariable = new StringBuilder();
-    	envVariable.append("Device").append(deviceNum).append("_UDID");
-    	return System.getenv(envVariable.toString());
+    	int deviceNum = Integer.parseInt(testName.split(" ")[1]);
+    	//StringBuilder envVariable = new StringBuilder();
+    	//envVariable.append("Device").append(deviceNum).append("_UDID");
+    	//return System.getenv(envVariable.toString());
+    	switch(deviceNum) {
+	    	case 1: return DEVICE1_QUERY;
+	    	case 2: return DEVICE2_QUERY;
+	    	case 3: return DEVICE3_QUERY;
+	    	case 4: return DEVICE4_QUERY;
+	    	case 5: return DEVICE5_QUERY;
+    	}
+    	return null;
     }
     
     private void setBrowserOS(String deviceOS) {
