@@ -66,6 +66,7 @@ public abstract class BaseTest {
     	if (testsMap == null) {
     		testsMap = new HashMap<String,DeviceForTest>();
     	}
+    	System.out.println("ADDING TO TESTS MAP -> " + testName);
     	testsMap.put(testName, new DeviceForTest(query,getDeviceOSfromQuery(query)));
     }
 
