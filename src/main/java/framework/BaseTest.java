@@ -111,6 +111,7 @@ public abstract class BaseTest {
     }
     
     private void setBrowserOS(String query) {
+    	System.out.println("QUERY = " + query);
     	if (query.contains("android")) {
     		this.deviceOS = MobileOS.ANDROID;
     	} else if (query.contains("ios")) {
